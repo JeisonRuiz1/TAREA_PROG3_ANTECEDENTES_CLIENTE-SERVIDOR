@@ -1,6 +1,8 @@
-package server;
+package server.network;
 
-import javax.xml.crypto.Data;
+import server.model.DataServer;
+import server.model.Infringement;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -8,8 +10,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class Server {
@@ -35,11 +35,8 @@ public class Server {
                     DataOutputStream outputChannel = new DataOutputStream(connection.getOutputStream());
                     String service = inputChannel.readUTF();
                     switch (service){
-                        case "/imageUpload":
-                            serviceUploadPhoto(inputChannel, outputChannel);
-                            break;
-                        case "/readDatas":
-                            readDatas(inputChannel, outputChannel);
+                        case "/searchPerson":
+                            searchPerson(inputChannel, outputChannel);
                             break;
                     }
                 } catch (IOException e) {
@@ -59,17 +56,17 @@ public class Server {
         outputChannel.writeInt(200);
     }
 
-    public void readDatas(DataInputStream inputChannel, DataOutputStream outputChannel){
+    public void searchPerson(DataInputStream inputChannel, DataOutputStream outputChannel) throws IOException {
         for (Infringement infrigment: dataServer.getInfringements()) {
-            System.out.println(infrigment.getPerson().getId()+" " +  infrigment.getPerson().getName());
+            if (infrigment.getPerson().getId() == Integer.parseInt(inputChannel.readUTF())) {
+                String person = infrigment.getPerson().getId()+" " +  infrigment.getPerson().getName();
+                outputChannel.writeUTF(person);
+                System.out.println(person);
+            }
         }
     }
-    
-    public void searchPerson(DataInputStream inputChannel, DataOutputStream outputChannel){
-        if (inputChannel == null) {
-            
-        }
-    }
+
+
 
 
     public static void main(String[] args) {

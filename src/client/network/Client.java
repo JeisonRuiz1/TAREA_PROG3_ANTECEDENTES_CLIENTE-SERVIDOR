@@ -1,4 +1,7 @@
-package client;
+package client.network;
+
+import client.view.JPTablePanel;
+import client.view.MainWindow;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -15,17 +18,13 @@ public class Client {
     private DataOutputStream outputChannel;
     private DataInputStream inputChannel;
 
-    public Client() throws IOException {
+    public Client(JPTablePanel tablePanel, String idPerson) throws IOException {
         this.socket = new Socket(IP, PORT);
         outputChannel = new DataOutputStream(socket.getOutputStream());
         inputChannel = new DataInputStream(socket.getInputStream());
-        /*sendRequest("/users", "1,20");
+        sendRequest(idPerson);
         String response = inputChannel.readUTF();
-        System.out.println(response);*/
-        File file = new File("./icon.png");
-        byte[] fileContent = Files.readAllBytes(file.toPath());
-        sendRequest("/readDatas", fileContent);
-        int response = inputChannel.readInt();
+        tablePanel.addInfoToTable(formatData(response));
         System.out.println(response);
     }
 
@@ -33,17 +32,15 @@ public class Client {
         outputChannel.writeUTF(service);
         outputChannel.writeUTF(params);
     }
-    public void sendRequest(String service, byte[] data) throws IOException {
+
+    public String[] formatData(String data){
+        return data.split(" ");
+    }
+    public void sendRequest(String service) throws IOException {
         outputChannel.writeUTF(service);
-        outputChannel.writeInt(data.length);
-        outputChannel.write(data);
     }
 
-    public static void main(String[] args) {
-        try {
-            new Client();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
+
+
 }

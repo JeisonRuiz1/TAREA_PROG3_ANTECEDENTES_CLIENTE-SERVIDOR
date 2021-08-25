@@ -8,6 +8,7 @@ import java.awt.*;
 public class TextFieldComponent extends JPanel {
     private int arcw=20;
     private int arch=20;
+    private JTextField casilla;
     public static final Dimension DEFAULT_ICON_DIMENSION = new Dimension(24,24);
 
     public TextFieldComponent(String iconPath, String text, Dimension dimension){
@@ -28,7 +29,7 @@ public class TextFieldComponent extends JPanel {
         button.setOpaque(false);
         this.add(button);
 
-        JTextField casilla = new JTextField(text);
+        casilla = new JTextField(text);
         casilla.setForeground(Color.decode("#444444"));
         casilla.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         casilla.setFont(new Font("Arial", Font.ITALIC, 14));
@@ -44,6 +45,10 @@ public class TextFieldComponent extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(Color.gray);
         super.paintComponent(g2);
+    }
+
+    public JTextField getCasilla() {
+        return casilla;
     }
 
     public int getArcw() {

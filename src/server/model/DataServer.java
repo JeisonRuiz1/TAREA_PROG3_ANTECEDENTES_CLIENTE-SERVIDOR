@@ -1,4 +1,4 @@
-package server;
+package server.model;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,7 @@ public class DataServer {
 
 
     public void addDatas(){
+        infringements.add(new Infringement(new Person(1007388645,"Jeisson"),"Mal estacionado"));
         infringements.add(new Infringement(new Person(1007388645,"Jeisson"),"Mal estacionado"));
         infringements.add(new Infringement(new Person(1007388646,"Manuel"),"Accidente de conducir"));
         infringements.add(new Infringement(new Person(1007388647,"Jose"),"No porte de documentos"));

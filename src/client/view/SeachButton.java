@@ -3,6 +3,7 @@ package client.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class SeachButton extends JButton {
     public static final String ICON_PATH = "src/resources/img/Buscar.png";
@@ -11,7 +12,7 @@ public class SeachButton extends JButton {
     public static final Font TEXT_FONT = new Font("Rubik", 1,16);
 
     private Color borderColor;
-    public SeachButton(){
+    public SeachButton(ActionListener ls){
         super(TEXT);
         this.setContentAreaFilled(false);
         this.setPreferredSize(new Dimension(122,45));
@@ -26,6 +27,8 @@ public class SeachButton extends JButton {
         this.setForeground(Color.white);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.setFont(TEXT_FONT);
+        this.addActionListener(ls);
+        this.setActionCommand("searchPerson");
         this.borderColor = borderColor;
     }
 
